@@ -5,7 +5,7 @@ export default function Skills() {
   const [skills, setSkills] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:5500/api/skills")
+    axios.get("https://portfolio-tfly.onrender.com/api/skills")
       .then(res => setSkills(res.data))
       .catch(err => console.error(err));
   }, []);
@@ -21,7 +21,7 @@ export default function Skills() {
           <div className="mb-4">
             {skill.icon && (
               <img
-                src={`http://localhost:5500${skill.icon}`} // prepend server URL
+                src={`https://portfolio-tfly.onrender.com${skill.icon}`} // prepend server URL
                 alt={skill.name}
                 className="mx-auto mb-4 h-16"
               />

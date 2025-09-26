@@ -7,7 +7,7 @@ export default function Projects() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5500/api/projects")
+      .get("https://portfolio-tfly.onrender.com/api/projects")
       .then((res) => setProjects(res.data.reverse()))
       .catch((err) => console.error(err));
   }, []);

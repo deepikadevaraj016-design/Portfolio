@@ -13,7 +13,7 @@ export default function AdminLogin() {
     try {
       
       const res = await axios.post(
-        "http://localhost:5500/api/admin/login", 
+        "https://portfolio-tfly.onrender.com/api/admin/login", 
         { email, password }
       );
 

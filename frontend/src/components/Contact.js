@@ -9,7 +9,7 @@ export default function Contact() {
 
   const handleSubmit = e => {
     e.preventDefault();
-    axios.post("http://localhost:5500/api/contact", form)
+    axios.post("https://portfolio-tfly.onrender.com/api/contact", form)
       .then(res => setSuccess("Message sent successfully!"))
       .catch(err => setSuccess("Failed to send message."));
   };

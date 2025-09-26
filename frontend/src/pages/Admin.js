@@ -26,7 +26,7 @@ export default function Admin() {
     try {
       // About
       if (about) {
-        await axios.post("http://localhost:5500/api/about", { about }, { headers });
+        await axios.post("https://portfolio-tfly.onrender.com/api/about", { about }, { headers });
       }
 
       // Skills
@@ -36,7 +36,7 @@ export default function Admin() {
         formData.append("level", level);
         if (icon) formData.append("icon", icon);
 
-        await axios.post("http://localhost:5500/api/skills", formData, {
+        await axios.post("https://portfolio-tfly.onrender.com/api/skills", formData, {
           headers: { ...headers, "Content-Type": "multipart/form-data" },
         });
         setSkill("");
@@ -50,7 +50,7 @@ export default function Admin() {
         formData.append("name", toolName);
         if (toolIcon) formData.append("icon", toolIcon);
 
-        await axios.post("http://localhost:5500/api/tools", formData, {
+        await axios.post("https://portfolio-tfly.onrender.com/api/tools", formData, {
           headers: { ...headers, "Content-Type": "multipart/form-data" },
         });
       }
@@ -58,7 +58,7 @@ export default function Admin() {
       // Projects
       if (projectName && projectDesc) {
         await axios.post(
-          "http://localhost:5500/api/projects",
+          "https://portfolio-tfly.onrender.com/api/projects",
           {
             title: projectName,
             description: projectDesc,
@@ -78,7 +78,7 @@ export default function Admin() {
 
       // Contact
       if (contactEmail) {
-        await axios.post("http://localhost:5500/api/contact", { email: contactEmail }, { headers });
+        await axios.post("https://portfolio-tfly.onrender.com/api/contact", { email: contactEmail }, { headers });
       }
 
       alert("Details updated successfully!");
