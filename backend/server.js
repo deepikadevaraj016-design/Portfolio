@@ -10,7 +10,7 @@ connectDB();
 const app = express();
 app.use(express.json());
 
-// Allow localhost (dev) AND Netlify frontend
+// Allow localhost and Netlify frontend
 const allowedOrigins = [
   "http://localhost:3000",
   "https://deepika-mern-portfolio.netlify.app"
@@ -18,11 +18,9 @@ const allowedOrigins = [
 
 app.use(cors({
   origin: function(origin, callback) {
-    // allow requests with no origin (like Postman, mobile apps)
-    if(!origin) return callback(null, true);
-    if(allowedOrigins.indexOf(origin) === -1) {
-      const msg = `The CORS policy for this site does not allow access from the specified Origin.`;
-      return callback(new Error(msg), false);
+    if (!origin) return callback(null, true); // Allow Postman, mobile apps
+    if (allowedOrigins.indexOf(origin) === -1) {
+      return callback(new Error("Not allowed by CORS"), false);
     }
     return callback(null, true);
   },
