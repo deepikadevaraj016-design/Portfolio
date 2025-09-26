@@ -19,46 +19,40 @@ const addMessage = async (req, res) => {
   }
 
   try {
-    // Save message to MongoDB
     const newMessage = new Message({ name, email, message });
     await newMessage.save();
-    console.log("Message saved to database:", newMessage);
 
-    // Configure transporter
+    res.status(201).json({ message: "Message saved successfully!" }); // Respond immediately
+
+    // Send email asynchronously
     let transporter = nodemailer.createTransport({
       service: "Gmail",
       auth: {
         user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
+        pass: process.env.EMAIL_PASS
+      }
     });
 
-    // Email content
     let mailOptions = {
-      from: process.env.EMAIL_USER, // sender must match your Gmail account
-      to: process.env.EMAIL_USER,   // send to yourself
+      from: email,
+      to: process.env.EMAIL_USER,
       subject: `New Contact Message from ${name}`,
       text: message,
       html: `<p><strong>Name:</strong> ${name}</p>
              <p><strong>Email:</strong> ${email}</p>
-             <p><strong>Message:</strong> ${message}</p>`,
+             <p><strong>Message:</strong> ${message}</p>`
     };
 
-    // Send email
     transporter.sendMail(mailOptions, (err, info) => {
-      if (err) {
-        console.error("Error sending email:", err);
-        return res.status(500).json({ message: "Message saved but failed to send email." });
-      } else {
-        console.log("Email sent:", info.response);
-        res.status(201).json({ message: "Message sent successfully!" });
-      }
+      if (err) console.error("Email error:", err);
+      else console.log("Email sent:", info.response);
     });
 
   } catch (err) {
-    console.error("Error in addMessage:", err);
-    res.status(500).json({ message: "Failed to send message." });
+    console.error(err);
+    res.status(500).json({ message: "Failed to save message" });
   }
 };
+
 
 module.exports = { getMessages, addMessage };
