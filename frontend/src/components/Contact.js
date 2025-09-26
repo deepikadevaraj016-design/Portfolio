@@ -5,7 +5,8 @@ export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [success, setSuccess] = useState("");
 
-  const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = e =>
+    setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -14,15 +15,28 @@ export default function Contact() {
         "https://portfolio-tfly.onrender.com/api/contact",
         form
       );
-      setSuccess(res.data.message); // Show backend message
-      setForm({ name: "", email: "", message: "" }); // Clear form
+
+      // Show alert popup
+      alert(res.data.message);
+
+      // Show success message below form
+      setSuccess(res.data.message);
+
+      // Clear form fields
+      setForm({ name: "", email: "", message: "" });
     } catch (err) {
       console.error(err.response || err);
-      if (err.response && err.response.data && err.response.data.message) {
-        setSuccess(`Failed: ${err.response.data.message}`);
-      } else {
-        setSuccess("Failed to send message. Please try again later.");
-      }
+
+      const errorMsg =
+        err.response && err.response.data && err.response.data.message
+          ? `Failed: ${err.response.data.message}`
+          : "Failed to send message. Please try again later.";
+
+      // Show alert popup for errors
+      alert(errorMsg);
+
+      // Show error below form
+      setSuccess(errorMsg);
     }
   };
 
@@ -31,7 +45,10 @@ export default function Contact() {
       <h2 className="text-4xl font-bold text-primary text-center mb-12">
         Contact Me
       </h2>
-      <form onSubmit={handleSubmit} className="max-w-xl mx-auto flex flex-col gap-4">
+      <form
+        onSubmit={handleSubmit}
+        className="max-w-xl mx-auto flex flex-col gap-4"
+      >
         <input
           name="name"
           placeholder="Name"
