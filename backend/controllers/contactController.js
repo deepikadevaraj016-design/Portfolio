@@ -1,7 +1,8 @@
-const Message = require("../models/Message");
-const nodemailer = require("nodemailer");
+import Message from "../models/Message.js";
+import nodemailer from "nodemailer";
 
-const getMessages = async (req, res) => {
+// Get all messages
+export const getMessages = async (req, res) => {
   try {
     const messages = await Message.find();
     res.json(messages);
@@ -11,7 +12,8 @@ const getMessages = async (req, res) => {
   }
 };
 
-const addMessage = async (req, res) => {
+// Add a new message
+export const addMessage = async (req, res) => {
   const { name, email, message } = req.body;
 
   if (!name || !email || !message) {
@@ -19,47 +21,41 @@ const addMessage = async (req, res) => {
   }
 
   try {
+    // Save message to DB
     const newMessage = new Message({ name, email, message });
     await newMessage.save();
-
-    res.status(201).json({ message: "Message saved successfully!" }); // Respond immediately
+    res.status(201).json({ message: "Message saved successfully!" });
 
     // Send email asynchronously
-    let transporter = nodemailer.createTransport({
+    const transporter = nodemailer.createTransport({
       service: "Gmail",
       auth: {
         user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-      }
+        pass: process.env.EMAIL_PASS,
+      },
     });
 
-    let mailOptions = {
-      from: email,
-      to: process.env.EMAIL_USER,
+    const mailOptions = {
+      from: process.env.EMAIL_USER, // Your email
+      replyTo: email,               // User's email
+      to: process.env.EMAIL_USER,   // Your email
       subject: `New Contact Message from ${name}`,
       text: message,
-      html: `<p><strong>Name:</strong> ${name}</p>
-             <p><strong>Email:</strong> ${email}</p>
-             <p><strong>Message:</strong> ${message}</p>`
+      html: `
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Message:</strong> ${message}</p>
+      `,
     };
 
-    transporter.sendMail(mailOptions, (err, info) => {
-      if (err) console.error("Email error:", err);
-      else console.log("Email sent:", info.response);
-    });
-
+    try {
+      const info = await transporter.sendMail(mailOptions);
+      console.log("Email sent:", info.response);
+    } catch (emailErr) {
+      console.error("Email sending failed:", emailErr);
+    }
   } catch (err) {
-    console.error(err);
+    console.error("Failed to save message:", err);
     res.status(500).json({ message: "Failed to save message" });
   }
 };
-
-await transporter.sendMail(mailOptions, (err, info) => {
-  if (err) {
-    console.error("Error sending email:", err);
-  } else {
-    console.log("Email sent:", info.response);
-  }
-});
-
-module.exports = { getMessages, addMessage };
