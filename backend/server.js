@@ -10,8 +10,22 @@ connectDB();
 const app = express();
 app.use(express.json());
 
+// Allow localhost (dev) AND Netlify frontend
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://deepika-mern-portfolio.netlify.app"
+];
+
 app.use(cors({
-  origin: "http://localhost:3000", // allow React app
+  origin: function(origin, callback) {
+    // allow requests with no origin (like Postman, mobile apps)
+    if(!origin) return callback(null, true);
+    if(allowedOrigins.indexOf(origin) === -1) {
+      const msg = `The CORS policy for this site does not allow access from the specified Origin.`;
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
   credentials: true
 }));
 
@@ -24,4 +38,4 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/api/tools", require("./routes/toolRoutes"));
 
 const PORT = process.env.PORT || 5500;
-app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
