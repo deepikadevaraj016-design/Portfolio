@@ -13,7 +13,8 @@ app.use(express.json());
 // Allow localhost and Netlify frontend
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://deepika-mern-portfolio.netlify.app"
+  "https://deepika-mern-portfolio.netlify.app",
+  "https://deepika-mern-portfolio.vercel.app"
 ];
 
 app.use(cors({
@@ -37,3 +38,4 @@ app.use("/api/tools", require("./routes/toolRoutes"));
 
 const PORT = process.env.PORT || 5500;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
