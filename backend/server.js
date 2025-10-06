@@ -19,11 +19,14 @@ const allowedOrigins = [
 
 app.use(cors({
   origin: function(origin, callback) {
-    if (!origin) return callback(null, true); // Allow Postman, mobile apps
-    if (allowedOrigins.indexOf(origin) === -1) {
-      return callback(new Error("Not allowed by CORS"), false);
+    if (!origin) return callback(null, true); 
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
     }
-    return callback(null, true);
+    else{
+      console.log(" Blocked by CORS:", origin);
+      callback(new Error("Not allowed by CORS"));
+    }
   },
   credentials: true
 }));
@@ -38,4 +41,5 @@ app.use("/api/tools", require("./routes/toolRoutes"));
 
 const PORT = process.env.PORT || 5500;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
 
