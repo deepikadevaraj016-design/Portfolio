@@ -10,7 +10,6 @@ import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import Admin from "./pages/Admin";
 import AdminLogin from "./pages/AdminLogin";
-import { Analytics } from "@vercel/analytics/react"
 function PrivateRoute({ children }) {
   const token = localStorage.getItem("token");
   return token ? children : <Navigate to="/login" />;
