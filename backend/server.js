@@ -31,6 +31,11 @@ app.use(cors({
   credentials: true
 }));
 
+app.get("/health", (req, res) => {
+  res.status(200).send("OK");
+});
+
+
 // Routes
 app.use("/api/admin", require("./routes/adminRoutes"));
 app.use("/api/contact", require("./routes/contactRoutes"));
@@ -41,5 +46,6 @@ app.use("/api/tools", require("./routes/toolRoutes"));
 
 const PORT = process.env.PORT || 5500;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
 
 
