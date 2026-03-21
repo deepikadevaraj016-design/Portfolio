@@ -33,7 +33,6 @@ app.use(cors({
 
 app.get("/health", async (req, res) => {
   try {
-    // Check DB connection
     await mongoose.connection.db.admin().ping();
 
     res.status(200).json({
