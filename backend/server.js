@@ -30,23 +30,8 @@ app.use(cors({
   credentials: true
 }));
 
-app.get("/health", async (req, res) => {
-  try {
-    await mongoose.connection.db.admin().ping();
-
-    res.status(200).json({
-      status: "OK",
-      db: "connected",
-      uptime: process.uptime(),
-      time: new Date()
-    });
-  } catch (error) {
-    res.status(500).json({
-      status: "ERROR",
-      db: "disconnected",
-      error: error.message
-    });
-  }
+app.get("/health", (req, res) => {
+  res.status(200).send("OK");
 });
 
 
