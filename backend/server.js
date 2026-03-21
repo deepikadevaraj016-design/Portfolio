@@ -10,7 +10,6 @@ connectDB();
 const app = express();
 app.use(express.json());
 
-// Allow localhost and Netlify frontend
 const allowedOrigins = [
   "http://localhost:3000",
   "https://deepika-mern-portfolio.netlify.app",
