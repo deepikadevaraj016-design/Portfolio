@@ -12,8 +12,8 @@ app.use(express.json());
 
 const allowedOrigins = [
   "http://localhost:3000",
+  "https://deepika-mern-portfolio.pages.dev/"
   "https://deepika-mern-portfolio.netlify.app",
-  "https://deepika-mern-portfolio.vercel.app"
 ];
 
 app.use(cors({
@@ -44,7 +44,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/api/tools", require("./routes/toolRoutes"));
 
 const PORT = process.env.PORT || 5500;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`https://portfolio-tfly.onrender.com`));
 
 
 
