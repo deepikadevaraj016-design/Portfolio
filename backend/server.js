@@ -13,7 +13,9 @@ app.use(express.json());
 const allowedOrigins = [
   "http://localhost:3000",
   "https://deepika-mern-portfolio.pages.dev/",
+  "https://deepika-mern-portfolio.vercel.app/",
   "https://deepika-mern-portfolio.netlify.app",
+  
 ];
 
 app.use(cors({
