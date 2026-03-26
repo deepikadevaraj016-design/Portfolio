@@ -12,20 +12,23 @@ app.use(express.json());
 
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://deepika-mern-portfolio.pages.dev/",
-  "https://deepika-mern-portfolio.vercel.app/",
+  "https://deepika-mern-portfolio.pages.dev",
+  "https://deepika-mern-portfolio.vercel.app",
   "https://deepika-mern-portfolio.netlify.app",
-  
 ];
 
 app.use(cors({
   origin: function(origin, callback) {
+
+    console.log("Incoming origin:", origin); 
+
     if (!origin) return callback(null, true); 
+
     if (allowedOrigins.includes(origin)) {
       callback(null, true);
     }
     else{
-      console.log(" Blocked by CORS:", origin);
+      console.log("Blocked by CORS:", origin);
       callback(new Error("Not allowed by CORS"));
     }
   },
