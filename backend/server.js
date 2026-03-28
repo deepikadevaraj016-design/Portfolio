@@ -15,20 +15,17 @@ const allowedOrigins = [
   "https://deepika-mern-portfolio.pages.dev",
   "https://deepika-mern-portfolio.vercel.app",
   "https://deepika-mern-portfolio.netlify.app",
+  
 ];
 
 app.use(cors({
   origin: function(origin, callback) {
-
-    console.log("Incoming origin:", origin); 
-
     if (!origin) return callback(null, true); 
-
     if (allowedOrigins.includes(origin)) {
       callback(null, true);
     }
     else{
-      console.log("Blocked by CORS:", origin);
+      console.log(" Blocked by CORS:", origin);
       callback(new Error("Not allowed by CORS"));
     }
   },
@@ -39,14 +36,35 @@ app.get("/health", (req, res) => {
   res.status(200).send("OK");
 });
 
-
 // Routes
 app.use("/api/admin", require("./routes/adminRoutes"));
 app.use("/api/contact", require("./routes/contactRoutes"));
-app.use("/api/projects", require("./routes/projectRoutes"));
-app.use("/api/skills", require("./routes/skillRoutes"));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-app.use("/api/tools", require("./routes/toolRoutes"));
+
+// ✅ ADD THIS HERE
+const Project = require("./models/Project");
+const Skill = require("./models/Skill");
+const Tool = require("./models/Tool");
+
+app.get("/api/all-data", async (req, res) => {
+  try {
+    const projects = await Project.find();
+    const skills = await Skill.find();
+    const tools = await Tool.find();
+
+    res.set("Cache-Control", "public, max-age=300");
+
+    res.json({
+      projects,
+      skills,
+      tools
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
 
 const PORT = process.env.PORT || 5500;
 app.listen(PORT, () => console.log(`https://portfolio-tfly.onrender.com`));
