@@ -7,8 +7,8 @@ export default function Projects() {
 
   useEffect(() => {
     axios
-      .get("https://portfolio-tfly.onrender.com/api/projects")
-      .then((res) => setProjects(res.data.reverse()))
+      .get("https://portfolio-tfly.onrender.com/api/all-data")
+      .then((res) => setProjects(res.data.projects.reverse()))
       .catch((err) => console.error(err));
   }, []);
 
