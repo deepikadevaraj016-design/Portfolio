@@ -6,7 +6,7 @@ export default function About() {
       className="py-16 px-6 max-w-6xl mx-auto ">
       <h2 className="text-4xl font-bold text-primary mb-8 text-center">Introduction</h2>
       <p className="text-gray-300 text-lg leading-relaxed text-justify mb-8">
-        I am a Full Stack Developer with 1.6 years of proven experience in building scalable and efficient web applications. I am skilled in the MERN stack (MongoDB, Express.js, React.js, Node.js), REST APIs, Next.js, and Tailwind CSS. I am passionate about designing clean, responsive user interfaces and developing robust backend systems to deliver seamless end-to-end solutions. One of my favorite technologies to work with is React.js, especially when combined with Node.js and MongoDB to create impactful full-stack applications.
+        I am a Full Stack Developer with 2 years of proven experience in building scalable and efficient web applications. I am skilled in the MERN stack (MongoDB, Express.js, React.js, Node.js), REST APIs, Next.js, and Tailwind CSS. I am passionate about designing clean, responsive user interfaces and developing robust backend systems to deliver seamless end-to-end solutions. One of my favorite technologies to work with is React.js, especially when combined with Node.js and MongoDB to create impactful full-stack applications.
       </p>
      
       {/* Roles Section */}
