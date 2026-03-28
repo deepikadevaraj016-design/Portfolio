@@ -5,8 +5,8 @@ export default function Skills() {
   const [skills, setSkills] = useState([]);
 
   useEffect(() => {
-    axios.get("https://portfolio-tfly.onrender.com/api/skills")
-      .then(res => setSkills(res.data))
+    axios.get("https://portfolio-tfly.onrender.com/api/all-data")
+      .then(res => setSkills(res.data.skills))
       .catch(err => console.error(err));
   }, []);
 
