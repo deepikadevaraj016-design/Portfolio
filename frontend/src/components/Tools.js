@@ -6,7 +6,7 @@ export default function Tools() {
 
   useEffect(() => {
     axios.get("https://portfolio-tfly.onrender.com/api/all-data")
-      .then(res => setSkills(res.data.skills))
+      .then(res => setTools(res.data.tools))
       .catch(err => console.error(err));
   }, []);
 
